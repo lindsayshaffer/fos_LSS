@@ -1,52 +1,36 @@
 class Bar extends HTMLElement {
 
-	constructor(){
-	
-		super()
-	
-		this.shadow = this.attachShadow({mode: 'open'})
-		
-	}
-	
-  
-	attributeChangedCallback(name, oldValue, newValue) {
-
-		this.render()
-  
+  constructor() {
+    super()
+    this.shadow = this.attachShadow({ mode: 'open' })
   }
-  
+
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    this.render()
+  }
+
   connectedCallback() {
-  
-  	this.render()
-  	
+    this.render()
   }
-	
-	static get observedAttributes() {
-	
-    return ['position']
 
+  static get observedAttributes() {
+    return ['position']
   }
-  
+
   get position() {
-  
     return this.hasAttribute('position') ? this.getAttribute('position') : 'bottom'
-    
   }
-  
+
   set position(val) {
-  
-    if (val && (val === "top" || val === "bottom") )
-    
+    if (val && (val === "top" || val === "bottom"))
       this.setAttribute('position', val)
-    
     else
-    
       this.removeAttribute('position')
   }
-  
-  render(){
-  
-  	this.shadow.innerHTML = `
+
+  render() {
+    this.shadow.innerHTML = `
 			<style>
 				:host{
 					position: absolute;
@@ -66,9 +50,7 @@ class Bar extends HTMLElement {
 			</style>
 			<slot></slot>
 		`;
-		
   }
-  
 }
 
 customElements.define('fos-bar', Bar)
